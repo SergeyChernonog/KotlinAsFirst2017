@@ -261,13 +261,15 @@ fun squareSequenceDigit(n: Int): Int {
     var i: Int = 0
     while (sequence / ((Math.pow(10.0, (n - 1).toDouble())).toInt()) <= 0) {
         i += 1
-        val part: Int = i*i
+        val part : Int= i*i
         val digitPart :Int = digitNumber(part)
-        sequence = sequence * (Math.pow(10.0, (digitPart).toDouble())).toInt() + i * i
+        sequence = sequence * (Math.pow(10.0, (digitPart).toDouble())).toInt() + part
     }
+
     sequence= revert(sequence) / (Math.pow(10.0, (n-1).toDouble())).toInt()
 
-    return sequence%10
+    return sequence % 10
+
 }
 /**
  * Сложная
@@ -276,4 +278,17 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var sequence: Int = 0
+    var i: Int = 0
+    while (sequence / ((Math.pow(10.0, (n - 1).toDouble())).toInt()) <= 0) {
+        i += 1
+        val part: Int = fib (i)
+        val digitPart: Int = digitNumber(part)
+        sequence = sequence * (Math.pow(10.0, (digitPart).toDouble())).toInt() + part
+    }
+
+    sequence = revert(sequence) / (Math.pow(10.0, (n - 1).toDouble())).toInt()
+
+    return sequence % 10
+}
