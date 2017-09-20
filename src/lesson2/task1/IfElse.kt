@@ -34,17 +34,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return (
-    when {
-         age % 100 in 11..20 ->  ("$age лет")
-         age % 10 == 0 ->  ("$age лет")
-         age % 10 in 5..9 ->  ("$age лет")
-         age % 10 in 2..4 -> ("$age года")
+fun ageDescription(age: Int): String =
 
-else ->  ("$age год")
-    })
-}
+    when {
+         age % 100 in 11..20 || age % 10 == 0 || age % 10 in 5..9 ->  ("$age лет")
+         age % 10 in 2..4 -> ("$age года")
+         else ->  ("$age год")
+    }
+
 
 /**
  * Простая
@@ -56,15 +53,16 @@ else ->  ("$age год")
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
-    val halfWay: Double = ((t1*v1+t2*v2+t3*v3)/2)
+    val firstWay: Double = t1 * v1
+    val secondWay: Double = t2 * v2
+    val thirdWay: Double = t3 * v3
+    val halfWay: Double = ((firstWay + secondWay + thirdWay) / 2)
     return( when
-    {         halfWay>(t1*v1+t2*v2) ->  (((halfWay-(t1*v1+t2*v2))/v3)+t1+t2)
-              halfWay >(t1*v1)  ->  (((halfWay-(t1*v1))/v2)+t1)
-              else ->  (halfWay/v1)
+    {         halfWay>(firstWay + secondWay) ->  (((halfWay - (firstWay + secondWay)) / v3) + t1 + t2)
+              halfWay >firstWay  ->  (((halfWay - firstWay) / v2) + t1)
+              else ->  (halfWay / v1)
 
     })
-
-
 }
 
 /**
@@ -78,13 +76,21 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int =
-    if (((kingX==rookX1)||(kingY==rookY1)) && ((kingX==rookX2)||(kingY==rookY2)))  3
-        else if ((kingX==rookX2) || (kingY==rookY2))  2
-            else if ((kingX==rookX1) || (kingY==rookY1))  1
-                else 0
+                       rookX2: Int, rookY2: Int): Int {
+    val attackRookX1: Boolean = (kingX == rookX1)
+    val attackRookY1: Boolean = (kingY == rookY1)
+    val attackRookX2: Boolean = (kingX == rookX2)
+    val attackRookY2: Boolean = (kingY == rookY2)
+    return (
+    when {
+        (attackRookX1 || attackRookY1) && (attackRookX2 || attackRookY2) -> 3
+        attackRookX2 || attackRookY2 -> 2
+        attackRookX1 || attackRookY1 -> 1
+        else -> 0
+    }
+             )
 
-
+}
 
 /**
  * Простая
@@ -98,12 +104,16 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int =
-    when {
-        (((kingX==rookX) || (kingY==rookY)) && (Math.abs(kingX-bishopX)==Math.abs(kingY-bishopY) )) ->  3
-        ((kingX==rookX) || (kingY==rookY)) -> 1
-        (Math.abs(bishopX-kingX)==Math.abs(bishopY-kingY))-> 2
+                          bishopX: Int, bishopY: Int): Int {
+    val attackRookX: Boolean = (kingX == rookX)
+    val attackRookY: Boolean = (kingY == rookY)
+    val attackBishop: Boolean = (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY))
+    return (when {
+        (attackRookX || attackRookY) && attackBishop -> 3
+        attackRookX || attackRookY -> 1
+        attackBishop -> 2
         else -> 0
+    })
 }
 
 /**
@@ -115,10 +125,11 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int =
-    when{ ((sqr(a)< (sqr(b)+ sqr(c))) && (sqr(c)< (sqr(a)+ sqr(b))) && ((sqr(b)< (sqr(a)+ sqr(c))))) ->  0
-        (((sqr(a)== (sqr(b)+ sqr(c))) || (sqr(c)== (sqr(a)+ sqr(b))) || (sqr(b)== (sqr(a)+ sqr(c)))))->  1
-        (a>(b+c)) || (b>(a+c)) || (c> (a+b))->  -1
-        else ->  2
+
+    when{   ((sqr(a)< (sqr(b)+ sqr(c))) && (sqr(c)< (sqr(a)+ sqr(b))) && ((sqr(b)< (sqr(a)+ sqr(c))))) ->  0
+            (((sqr(a)== (sqr(b)+ sqr(c))) || (sqr(c)== (sqr(a)+ sqr(b))) || (sqr(b)== (sqr(a)+ sqr(c)))))->  1
+            (a>(b+c)) || (b>(a+c)) || (c> (a+b))->  -1
+            else ->  2
    }
 
 
@@ -131,20 +142,19 @@ fun triangleKind(a: Double, b: Double, c: Double): Int =
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
-    if (a>c)
-        when { (b<d)-> b-a
-            (b>d)&&((d-a)>=0) -> d-a
+        when {
+            a > c -> when {
+                a > d -> -1
+                b < d -> b - a
+                else -> d - a
+            }
+            else -> when {
+                b < c -> -1
+                b > d -> d - c
+                else -> b - c
+            }
 
-            else ->-1
         }
-    else when { (b>d)-> d-c
-                    (b<d)&&((b-c)>=0) -> b-c
-
-                 else -> -1
-
-        }
-
-
 
 
 

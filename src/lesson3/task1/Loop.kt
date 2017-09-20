@@ -1,8 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
-import jdk.nashorn.internal.runtime.JSType.toDouble
-import jdk.nashorn.internal.runtime.JSType.toInt32
+
 
 /**
  * Пример
@@ -79,8 +78,8 @@ return(
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int = when (n){
-    1-> 1
-    2->1
+    1  -> 1
+    2  -> 1
     else -> fib(n-2)+fib(n-1)
 }
 
@@ -93,10 +92,10 @@ fun fib(n: Int): Int = when (n){
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var i:Int=m
-    if (n>m) i=n
-    while ((i%m!=0) ||(i%n!=0)) i+=1
-    return (i)
+    var i: Int = m
+    if (n > m) i = n
+    while ((i % m != 0) ||(i % n != 0)) i += 1
+    return i
 
 
 }
@@ -107,12 +106,11 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var i: Int = 2
-    while (n % i != 0) {
-        i += 1
+    for (i in 2..n) {
+        if (n % i == 0) return i
 
     }
-    return i
+    return 0
 }
 /**
  * Простая
@@ -135,17 +133,13 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var k:Int=Math.abs(m)
-    var r: Int= Math.abs (n)
-    while (k!=r)
-    { if (k>r) k-=r
-        else r-=k
-
-
+    var k: Int=Math.abs(m)
+    var r: Int= Math.abs(n)
+    while (k != r) {
+        if ( k > r) k -= r
+        else r -= k
     }
-    return (r==1)
-
-
+    return r == 1
  }
 
 
@@ -160,14 +154,14 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var i: Int = m
+    val k: Int = Math.sqrt(n.toDouble()).toInt()
+    val r: Int = Math.sqrt(m.toDouble()).toInt()
     for (i in m..n) {
-
-        if (Math.sqrt(toDouble(i)) * Math.sqrt(toDouble(i)) == toDouble(i))
-            break
+        for (l in r..k)
+            if (i==l*l) return true
 
     }
-    return (Math.sqrt(toDouble(i)) * Math.sqrt(toDouble(i)) == toDouble(i))
+    return false
 }
 
 
@@ -180,7 +174,21 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var sinX: Double = 0.0
+    var n: Int = 1
+    var k: Double = 0.0
+    var part: Double =x
+    while (part>eps){
+        sinX += part*Math.pow(-1.0, k)
+        n += 2
+        k += 1.0
+        part= Math.pow(x, n.toDouble()) / factorial(n)
+
+    }
+    return sinX
+
+}
 /**
  * Средняя
  *
@@ -188,8 +196,20 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var cosX: Double = 0.0
+    var n: Int = 0
+    var k: Double = 0.0
+    var part: Double = 1.0
+    while (part > eps) {
+        cosX += part * Math.pow(-1.0, k)
+        n += 2
+        k += 1.0
+        part = Math.pow(x, n.toDouble()) / factorial(n)
 
+    }
+    return cosX
+}
 /**
  * Средняя
  *
@@ -197,13 +217,13 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var k:Int =n
-    var f:Int=0
-    while (k>0) {
+    var k: Int = n
+    var f: Int = 0
+    while (k > 0) {
         f = f * 10 + k % 10
         k /= 10
     }
-    return (f)
+    return f
 }
 
 /**
@@ -214,7 +234,7 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean =
-    revert(n)==n
+    revert(n) == n
 
 
 /**
@@ -225,9 +245,9 @@ fun isPalindrome(n: Int): Boolean =
  */
 fun hasDifferentDigits(n: Int): Boolean =
         when {
-            n/10==0 -> false
-            (n/10)%10==n%10 -> hasDifferentDigits(n/10)
-            else-> true
+            n / 10 == 0 -> false
+            (n / 10) % 10==n % 10 -> hasDifferentDigits(n / 10)
+            else -> true
         }
 /**
  * Сложная
@@ -236,8 +256,19 @@ fun hasDifferentDigits(n: Int): Boolean =
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var sequence: Int = 0
+    var i: Int = 0
+    while (sequence / ((Math.pow(10.0, (n - 1).toDouble())).toInt()) <= 0) {
+        i += 1
+        val part: Int = i*i
+        val digitPart :Int = digitNumber(part)
+        sequence = sequence * (Math.pow(10.0, (digitPart).toDouble())).toInt() + i * i
+    }
+    sequence= revert(sequence) / (Math.pow(10.0, (n-1).toDouble())).toInt()
 
+    return sequence%10
+}
 /**
  * Сложная
  *

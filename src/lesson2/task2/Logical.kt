@@ -54,14 +54,24 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
 
 var p:Int =r
-var z:Int= s
-    if (s>r) p=s ; z=r
+var z:Int =s
+    if (Math.max(s,r)== s) {
+        z=s
+        p=r
+    }
+        else {
+        p=s
+        z=r
+    }
 
 
-    return  if (p>=b)  ((z>=a)||(z>=c))
-         else if (p>=a) ((z>=b)||(z>=c))
-            else if (p>=c)  ((z>=b)||(z>=a))
-                else false
+   return (when{
+       (p>=a)&&((z>=b)||(z>=c))-> true
+       (p>=b)&&((z>=a)||(z>=c))-> true
+       (p>=c)&&((z>=a)||(z>=b))-> true
+       else-> false
+
+   })
 
 
 
