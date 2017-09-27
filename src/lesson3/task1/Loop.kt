@@ -263,19 +263,20 @@ fun hasDifferentDigits(n: Int): Boolean =
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var sequence: Int = 0
-    var i: Int = 0
-    while (sequence / ((Math.pow(10.0, (n - 1).toDouble())).toInt()) <= 0) {
-        i += 1
-        val part : Int= i*i
-        val digitPart :Int = digitNumber(part)
-        sequence = sequence * (Math.pow(10.0, (digitPart).toDouble())).toInt() + part
-    }
+   var k: Int = n
+   var i: Int = 0
+    var  last:Int = 0
+   while (k>0) {
+       i += 1
+       last= i * i
+       k -= digitNumber(last)
 
-    sequence= revert(sequence) / (Math.pow(10.0, (n-1).toDouble())).toInt()
+   }
 
-    return sequence % 10
-
+    k*=-1
+    val divisor: Int = Math.pow(10.0, (k.toDouble())).toInt()
+    return if (k == 0) last % 10
+        else (last/divisor)%10
 }
 /**
  * Сложная
@@ -285,16 +286,17 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var sequence: Int = 0
-    var i: Int = 0
-    while (sequence / ((Math.pow(10.0, (n - 1).toDouble())).toInt()) <= 0) {
+    var k: Int= n
+    var i: Int= 0
+    var  last:Int = 0
+    while (k>0) {
         i += 1
-        val part: Int = fib (i)
-        val digitPart: Int = digitNumber(part)
-        sequence = sequence * (Math.pow(10.0, (digitPart).toDouble())).toInt() + part
+        last= fib(i)
+        k -= digitNumber(last)
+
     }
-
-    sequence = revert(sequence) / (Math.pow(10.0, (n - 1).toDouble())).toInt()
-
-    return sequence % 10
+    k*=-1
+    val divisor: Int = Math.pow(10.0, (k.toDouble())).toInt()
+    return if (k == 0) last % 10
+        else (last/divisor)%10
 }
