@@ -158,7 +158,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     val r: Int = Math.sqrt(m.toDouble()).toInt()
     for (i in m..n) {
         for (l in r..k)
-            if (i==l*l) return true
+            if (i == l * l) return true
 
     }
     return false
@@ -178,15 +178,15 @@ fun sin(x: Double, eps: Double): Double {
     var l: Double = x
      while (l > 2 * Math.PI)
          l-= 2 * Math.PI
-    var sinX: Double = 0.0
+    var sinX: Double = l
     var n: Int = 1
-    var k: Double = 0.0
+    var k: Double = 1.0
     var part: Double = l
-    while (part>eps){
+    while (part > eps) {
         sinX += part * Math.pow(-1.0, k)
         n += 2
         k += 1.0
-        part= Math.pow(l, n.toDouble()) / factorial(n)
+        part = Math.pow(l, n.toDouble()) / factorial(n)
 
     }
     return sinX
@@ -252,7 +252,7 @@ fun isPalindrome(n: Int): Boolean =
 fun hasDifferentDigits(n: Int): Boolean =
         when {
             n / 10 == 0 -> false
-            (n / 10) % 10==n % 10 -> hasDifferentDigits(n / 10)
+            (n / 10) % 10 == n % 10 -> hasDifferentDigits(n / 10)
             else -> true
         }
 /**
@@ -266,7 +266,7 @@ fun squareSequenceDigit(n: Int): Int {
    var k: Int = n
    var i: Int = 0
     var  last:Int = 0
-   while (k>0) {
+   while (k > 0) {
        i += 1
        last= i * i
        k -= digitNumber(last)
@@ -274,10 +274,14 @@ fun squareSequenceDigit(n: Int): Int {
    }
 
     k*=-1
-    val divisor: Int = Math.pow(10.0, (k.toDouble())).toInt()
     return if (k == 0) last % 10
-        else (last/divisor)%10
-}
+        else {
+        for (o in 1..k)
+           last /= 10
+        return last % 10
+    }
+  }
+
 /**
  * Сложная
  *
@@ -289,14 +293,17 @@ fun fibSequenceDigit(n: Int): Int {
     var k: Int= n
     var i: Int= 0
     var  last:Int = 0
-    while (k>0) {
+    while (k > 0) {
         i += 1
-        last= fib(i)
+        last = fib(i)
         k -= digitNumber(last)
 
     }
     k*=-1
-    val divisor: Int = Math.pow(10.0, (k.toDouble())).toInt()
     return if (k == 0) last % 10
-        else (last/divisor)%10
+    else {
+        for (o in 1..k)
+            last /= 10
+        return last % 10
+    }
 }

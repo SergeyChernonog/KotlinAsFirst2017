@@ -126,10 +126,11 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int =
 
-    when{   ((sqr(a)< (sqr(b)+ sqr(c))) && (sqr(c)< (sqr(a)+ sqr(b))) && ((sqr(b)< (sqr(a)+ sqr(c))))) ->  0
-            (((sqr(a)== (sqr(b)+ sqr(c))) || (sqr(c)== (sqr(a)+ sqr(b))) || (sqr(b)== (sqr(a)+ sqr(c)))))->  1
-            (a>(b+c)) || (b>(a+c)) || (c> (a+b))->  -1
-            else ->  2
+    when{
+        ((sqr(a)< (sqr(b)+ sqr(c))) && (sqr(c)< (sqr(a)+ sqr(b))) && ((sqr(b)< (sqr(a)+ sqr(c))))) ->  0
+        (((sqr(a)== (sqr(b)+ sqr(c))) || (sqr(c)== (sqr(a)+ sqr(b))) || (sqr(b)== (sqr(a)+ sqr(c)))))->  1
+        (a>(b+c)) || (b>(a+c)) || (c> (a+b))->  -1
+         else ->  2
    }
 
 
