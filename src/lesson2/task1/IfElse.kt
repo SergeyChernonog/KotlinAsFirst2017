@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task1
 
 import lesson1.task1.discriminant
@@ -35,12 +36,11 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String =
-
-    when {
-         age % 100 in 11..20 || age % 10 == 0 || age % 10 in 5..9 ->  ("$age лет")
-         age % 10 in 2..4 -> ("$age года")
-         else ->  ("$age год")
-    }
+        when {
+            age % 100 in 11..20 || age % 10 == 0 || age % 10 in 5..9 -> "$age лет"
+            age % 10 in 2..4 -> "$age года"
+            else -> "$age год"
+        }
 
 
 /**
@@ -57,12 +57,11 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val secondWay: Double = t2 * v2
     val thirdWay: Double = t3 * v3
     val halfWay: Double = ((firstWay + secondWay + thirdWay) / 2)
-    return( when
-    {         halfWay>(firstWay + secondWay) ->  (((halfWay - (firstWay + secondWay)) / v3) + t1 + t2)
-              halfWay >firstWay  ->  (((halfWay - firstWay) / v2) + t1)
-              else ->  (halfWay / v1)
-
-    })
+    return when {
+        halfWay > (firstWay + secondWay) -> ((halfWay - (firstWay + secondWay)) / v3) + t1 + t2
+        halfWay > firstWay -> ((halfWay - firstWay) / v2) + t1
+        else -> halfWay / v1
+    }
 }
 
 /**
@@ -81,15 +80,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     val attackRookY1: Boolean = (kingY == rookY1)
     val attackRookX2: Boolean = (kingX == rookX2)
     val attackRookY2: Boolean = (kingY == rookY2)
-    return (
-    when {
+    return when {
         (attackRookX1 || attackRookY1) && (attackRookX2 || attackRookY2) -> 3
         attackRookX2 || attackRookY2 -> 2
         attackRookX1 || attackRookY1 -> 1
         else -> 0
     }
-             )
-
 }
 
 /**
@@ -108,12 +104,12 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
     val attackRookX: Boolean = (kingX == rookX)
     val attackRookY: Boolean = (kingY == rookY)
     val attackBishop: Boolean = (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY))
-    return (when {
+    return when {
         (attackRookX || attackRookY) && attackBishop -> 3
         attackRookX || attackRookY -> 1
         attackBishop -> 2
         else -> 0
-    })
+    }
 }
 
 /**
@@ -124,15 +120,22 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int =
-
-    when{
-        ((sqr(a)< (sqr(b)+ sqr(c))) && (sqr(c)< (sqr(a)+ sqr(b))) && ((sqr(b)< (sqr(a)+ sqr(c))))) ->  0
-        (((sqr(a)== (sqr(b)+ sqr(c))) || (sqr(c)== (sqr(a)+ sqr(b))) || (sqr(b)== (sqr(a)+ sqr(c)))))->  1
-        (a>(b+c)) || (b>(a+c)) || (c> (a+b))->  -1
-         else ->  2
-   }
-
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val m = Math.max(a, Math.max(c, b))
+    var n = b
+    var k = a
+    when (m) {
+        a -> {n = c; k = b}
+        c -> {n = a; k = b}
+        b -> {n = c; k = a}
+    }
+    return when {
+        ((sqr(a) < (sqr(b) + sqr(c))) && (sqr(c) < (sqr(a) + sqr(b))) && ((sqr(b) < (sqr(a) + sqr(c))))) -> 0
+        sqr(m) == sqr(n) + sqr(k) -> 1
+        m > n + k -> -1
+        else -> 2
+    }
+}
 
 /**
  * Средняя
@@ -154,7 +157,6 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
                 b > d -> d - c
                 else -> b - c
             }
-
         }
 
 
