@@ -82,13 +82,13 @@ fun fib(n: Int): Int {
     var a2: Int = 1
     var a3: Int = 1
 
-    if (n<3) return 1
-        else
+    if (n < 3) return 1
+    else
         for (i in 3..n) {
             a3 = a1 + a2
             a1 = a2
             a2 = a3
-    }
+        }
     return a3
 }
 
@@ -114,9 +114,8 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (i in 2..n) {
+    for (i in 2..n ) {
         if (n % i == 0) return i
-
     }
     return 0
 }
@@ -130,7 +129,6 @@ fun maxDivisor(n: Int): Int {
     var i: Int = n / 2
     while (n % i != 0) {
         i -= 1
-
     }
     return i
 }
@@ -166,7 +164,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (i in m..n) {
         for (l in r..k)
             if (i == l * l) return true
-
     }
     return false
 }
@@ -179,24 +176,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double {
-    var l: Double = x
-    while (l > 2 * Math.PI)
-        l -= 2 * Math.PI
-    var sinX: Double = l
-    var n: Int = 1
-    var k: Double = 1.0
-    var part: Double = l
-    while (part > eps) {
-        sinX += part * Math.pow(-1.0, k)
-        n += 2
-        k += 1.0
-        part = Math.pow(l, n.toDouble()) / factorial(n)
-
-    }
-    return sinX
-
-}
+fun sin(x: Double, eps: Double): Double = Math.sqrt(1 - cos(x, eps) * cos(x, eps))
 
 /**
  * Средняя
@@ -206,20 +186,18 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    var l: Double = x
-    while (l > 2 * Math.PI)
-        l -= 2 * Math.PI
-    var cosX: Double = 0.0
-    var n: Int = 0
-    var k: Double = 0.0
-    var part: Double = 1.0
-    while (part > eps) {
-        cosX += part * Math.pow(-1.0, k)
-        n += 2
-        k += 1.0
-        part = Math.pow(l, n.toDouble()) / factorial(n)
+    var cosResult = 1.0
+    val cosArg = x % 2 * Math.PI
+    var part = cosArg
+    var n = 1.0
+    var k = 2.0
+    while (part >= eps) {
+        part = Math.pow(cosArg, k) / factorial(k.toInt())
+        cosResult += Math.pow(-1.0, n) * part
+        n += 1.0
+        k += 2.0
     }
-    return cosX
+    return cosResult
 }
 
 /**
@@ -230,7 +208,7 @@ fun cos(x: Double, eps: Double): Double {
  */
 fun revert(n: Int): Int {
     var k: Int = n
-    var f: Int = 0
+    var f = 0
     while (k > 0) {
         f = f * 10 + k % 10
         k /= 10
