@@ -282,10 +282,10 @@ fun decimalFromString(str: String, base: Int): Int {
     var partInDecimal = 0
     var basePow = 1
 
-    for (i in 0..str.length) {
-        partInDecimal = when (str[i]) {
-            in '0'..'9' -> str[i].toInt()- '0'.toInt()
-            else -> str[i].toInt() - 'a'.toInt() + 10
+    for (symbol in str) {
+        partInDecimal = when (symbol) {
+            in '0'..'9' -> symbol.toInt()- '0'.toInt()
+            else -> symbol.toInt() - 'a'.toInt() + 10
         }
         result += partInDecimal * basePow
         basePow *= base
