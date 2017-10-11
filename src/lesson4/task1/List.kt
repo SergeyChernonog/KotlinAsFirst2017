@@ -239,17 +239,17 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
+    var result = ""
     var number = n
-    val result = ""
-    var partNumber = 0
-    while (number > base) {
-        partNumber = number % base
-
+    while (number > 0) {
+        val digit = number % base
+        result = if (digit > 9) ('a'.toInt() + digit - 10).toChar() + result
+        else digit.toString() + result
+        number /= base
     }
     return result
-
-
 }
+
 
 /**
  * Средняя
@@ -277,7 +277,22 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    var result = 0
+    var partInDecimal = 0
+    var basePow = 1
+
+    for (i in 0..str.length) {
+        partInDecimal = when (str[i]) {
+            in '0'..'9' -> str[i].toInt()
+            else -> str[i].toInt() - 'a'.toInt() + 10
+        }
+        result += partInDecimal * basePow
+        basePow *= base
+    }
+
+    return result
+}
 
 /**
  * Сложная
@@ -296,5 +311,5 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String =  TODO()
+fun russian(n: Int): String = TODO()
 
