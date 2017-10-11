@@ -260,10 +260,10 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     val decDigits = mutableListOf<Int>()
-    var baseX = 1
+    var basePow = 1
     for (i in digits.size - 1 downTo 0) {
-        decDigits.add(digits[i] * baseX)
-        baseX *= base
+        decDigits.add(digits[i] * basePow)
+        basePow *= base
     }
     return decDigits.sum()
 }
@@ -284,7 +284,7 @@ fun decimalFromString(str: String, base: Int): Int {
 
     for (i in 0..str.length) {
         partInDecimal = when (str[i]) {
-            in '0'..'9' -> str[i].toInt()
+            in '0'..'9' -> str[i].toInt()- '0'.toInt()
             else -> str[i].toInt() - 'a'.toInt() + 10
         }
         result += partInDecimal * basePow
