@@ -222,11 +222,11 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val baseNumber = mutableListOf<Int>()
     var number = n
-    while (number > base) {
+    while (number > 0) {
         baseNumber.add(0, number % base)
         number /= base
     }
-    baseNumber.add(0, number)
+
     return baseNumber
 }
 
@@ -241,6 +241,7 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     var result = ""
     var number = n
+    if (number == 0) result += '0'
     while (number > 0) {
         val digit = number % base
         result = if (digit > 9) ('a'.toInt() + digit - 10).toChar() + result
@@ -282,9 +283,9 @@ fun decimalFromString(str: String, base: Int): Int {
     var partInDecimal = 0
     var basePow = 1
 
-    for (i in str.length-1 downTo 0) {
+    for (i in str.length - 1 downTo 0) {
         partInDecimal = when (str[i]) {
-            in '0'..'9' -> str[i].toInt()- '0'.toInt()
+            in '0'..'9' -> str[i].toInt() - '0'.toInt()
             else -> str[i].toInt() - 'a'.toInt() + 10
         }
         result += partInDecimal * basePow
