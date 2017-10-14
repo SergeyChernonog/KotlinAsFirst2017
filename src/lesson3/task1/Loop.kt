@@ -78,9 +78,9 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var a1: Int = 1
-    var a2: Int = 1
-    var a3: Int = 1
+    var a1 = 1
+    var a2 = 1
+    var a3 = 1
 
     if (n < 3) return 1
     else
@@ -114,7 +114,7 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (i in 2..n ) {
+    for (i in 2..n) {
         if (n % i == 0) return i
     }
     return 0
@@ -176,7 +176,8 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = Math.sqrt(1 - cos(x, eps) * cos(x, eps))
+fun sin(x: Double, eps: Double): Double = TODO()
+
 
 /**
  * Средняя
@@ -185,20 +186,7 @@ fun sin(x: Double, eps: Double): Double = Math.sqrt(1 - cos(x, eps) * cos(x, eps
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double {
-    var cosResult = 1.0
-    val cosArg = x % 2 * Math.PI
-    var part = cosArg
-    var n = 1.0
-    var k = 2.0
-    while (part >= eps) {
-        part = Math.pow(cosArg, k) / factorial(k.toInt())
-        cosResult += Math.pow(-1.0, n) * part
-        n += 1.0
-        k += 2.0
-    }
-    return cosResult
-}
+fun cos(x: Double, eps: Double): Double = Math.sqrt(1 - sin(x, eps) * sin(x, eps))
 
 /**
  * Средняя
