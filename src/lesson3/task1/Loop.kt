@@ -100,10 +100,13 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var i: Int = m
-    if (n > m) i = n
-    while ((i % m != 0) || (i % n != 0)) i += 1
-    return i
+    var k: Int = Math.abs(m)
+    var r: Int = Math.abs(n)
+    while (k != r) {
+        if (k > r) k -= r
+        else r -= k
+    }
+    return m * n / r
 
 
 }
