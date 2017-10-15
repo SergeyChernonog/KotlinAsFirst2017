@@ -304,7 +304,10 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
+
+
 fun roman(n: Int): String = TODO()
+
 
 /**
  * Очень сложная
@@ -331,7 +334,7 @@ fun russian(n: Int): String {
         else "тысяч "
     }
 
-    result += if ((units > 2) || (units == 0) || (dozens ==1))  russianConvert(hundreds, dozens, units)
+    result += if ((units > 2) || (units == 0) || (dozens == 1)) russianConvert(hundreds, dozens, units)
     else {
         if (units == 2) russianConvert(hundreds, dozens, 0) + "два"
         else russianConvert(hundreds, dozens, 0) + "один"
@@ -374,7 +377,7 @@ fun russianConvert(n: Int, m: Int, k: Int): String {
             4 -> "четырнадцать "
             3 -> "тринадцать "
             2 -> "двенадцать "
-            1 -> "одинадцать "
+            1 -> "одиннадцать "
             else -> "десять "
         }
         else -> ""
