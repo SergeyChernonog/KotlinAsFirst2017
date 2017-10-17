@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson5.task1
 
 /**
@@ -48,12 +49,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -66,7 +65,26 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    var result = ""
+    val months = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+            "сентября", "октября", "ноября", "декабря")
+    try {
+        val parts = str.split(' ')
+        if (parts[0].toInt() == 0) return ""
+        result += twoDigitStr(parts[0].toInt())
+        result += '.'
+        if (months.indexOf(parts[1]) == -1) return ""
+        result += twoDigitStr(months.indexOf(parts[1]) + 1)
+        result += '.'
+        if (parts[2].toInt() == 0) return ""
+        result += parts[2]
+        return result
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+
+}
 
 /**
  * Средняя
@@ -75,7 +93,20 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    var result = ""
+    val months = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+            "сентября", "октября", "ноября", "декабря")
+    val parts = digital.split('.')
+    for (part in parts)
+        if (part.toInt() == 0) return ""
+    result += parts[0]
+    result += ' '
+    result += months[parts[1].toInt() -1]
+    result += " "
+    result += parts[2]
+    return result
+}
 
 /**
  * Средняя

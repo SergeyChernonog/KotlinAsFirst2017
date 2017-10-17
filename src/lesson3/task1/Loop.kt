@@ -189,7 +189,7 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = Math.sqrt(1 - sin(x, eps) * sin(x, eps))
+fun cos(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя
