@@ -66,24 +66,17 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    var result = ""
-    val months = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+
+    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
             "сентября", "октября", "ноября", "декабря")
     try {
-        val parts = str.split(' ')
-        if (parts[0].toInt() == 0) return ""
-        result += twoDigitStr(parts[0].toInt())
-        result += '.'
+        val parts = str.split(" ")
+        if ((parts.size > 3) || (parts[0].toInt() !in 1..31) || (parts[2].toInt() <= 0)) return ""
         if (months.indexOf(parts[1]) == -1) return ""
-        result += twoDigitStr(months.indexOf(parts[1]) + 1)
-        result += '.'
-        if (parts[2].toInt() == 0) return ""
-        result += parts[2]
-        return result
+        return String.format("%02d.%02d.%d", parts[0].toInt(), months.indexOf(parts[1]) + 1, parts[2].toInt())
     } catch (e: IndexOutOfBoundsException) {
         return ""
     }
-
 }
 
 /**
@@ -94,19 +87,20 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    var result = ""
-    val months = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+
+    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
             "сентября", "октября", "ноября", "декабря")
-    val parts = digital.split('.')
-    for (part in parts)
-        if (part.toInt() == 0) return ""
-    result += parts[0]
-    result += ' '
-    result += months[parts[1].toInt() -1]
-    result += " "
-    result += parts[2]
-    return result
+    try {
+        val parts = digital.split(".")
+        if ((parts.size > 3) || (parts[0].toInt() !in 1..31) || (parts[1].toInt() !in 1..12) || (parts[2].toInt() <= 0))
+            return ""
+        val month = months[parts[1].toInt() - 1]
+        return String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
+    } catch (e: NumberFormatException) {
+        return ""
+    }
 }
+
 
 /**
  * Средняя
@@ -120,7 +114,16 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    var result = ""
+    for (symbol in phone) {
+        when (symbol) {
+            in "1234567890+-() " -> if (symbol in "1234567890+") result += symbol
+            else -> return ""
+        }
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -132,7 +135,21 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val parts = jumps.split(" ")
+    var max = 0
+    try {
+        for (part in parts) {
+            if (part in " -%") continue
+            if (part.toInt() > max) max = part.toInt()
+        }
+        return if (max > 0) max
+        else -1
+    } catch (e: NumberFormatException) {
+        return -1
+    }
+}
+
 
 /**
  * Сложная
