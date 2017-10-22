@@ -65,19 +65,7 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String {
-
-    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
-            "сентября", "октября", "ноября", "декабря")
-    try {
-        val parts = str.split(" ")
-        if ((parts.size > 3) || (parts[0].toInt() !in 1..31) || (parts[2].toInt() <= 0)) return ""
-        if (months.indexOf(parts[1]) == -1) return ""
-        return String.format("%02d.%02d.%d", parts[0].toInt(), months.indexOf(parts[1]) + 1, parts[2].toInt())
-    } catch (e: IndexOutOfBoundsException) {
-        return ""
-    }
-}
+fun dateStrToDigit(str: String): String = TODO()
 
 /**
  * Средняя
@@ -92,7 +80,7 @@ fun dateDigitToStr(digital: String): String {
             "сентября", "октября", "ноября", "декабря")
     try {
         val parts = digital.split(".")
-        if ((parts.size > 3) || (parts[0].toInt() !in 1..31) || (parts[1].toInt() !in 1..12) || (parts[2].toInt() <= 0))
+        if ((parts.size > 3) || (parts[0].toInt() !in 1..31) || (parts[1].toInt() !in 1..12) || (parts[2].toInt() < 0))
             return ""
         val month = months[parts[1].toInt() - 1]
         return String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
@@ -137,14 +125,13 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     val parts = jumps.split(" ")
-    var max = 0
+    var max = -1
     try {
         for (part in parts) {
             if (part in " -%") continue
             if (part.toInt() > max) max = part.toInt()
         }
-        return if (max > 0) max
-        else -1
+        return max
     } catch (e: NumberFormatException) {
         return -1
     }
