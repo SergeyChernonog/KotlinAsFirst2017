@@ -325,19 +325,20 @@ fun russian(n: Int): String {
     val hundreds = (n / 100) % 10
     val dozens = (n / 10) % 10
     val units = n % 10
+    result += russianConvert(hundredsOfThousands, dozensOfThousands, thousands)
     if (n / 1000 > 0) {
         result += if ((dozensOfThousands != 1) && (thousands < 5) && (thousands > 0))
             when (thousands) {
-                1 -> "тысяча"
-                else -> "тысячи"
+                1 -> "тысяча "
+                else -> "тысячи "
             }
         else "тысяч "
     }
 
-    result += if ((units > 2) || (units == 0) || (dozens == 1)) numbersToRussianNumerals(hundreds, dozens, units)
+    result += if ((units > 2) || (units == 0) || (dozens == 1)) russianConvert(hundreds, dozens, units)
     else {
-        if (units == 2) numbersToRussianNumerals(hundreds, dozens, 0) + "два"
-        else numbersToRussianNumerals(hundreds, dozens, 0) + "один"
+        if (units == 2) russianConvert(hundreds, dozens, 0) + "два"
+        else russianConvert(hundreds, dozens, 0) + "один"
     }
     result = result.trim()
     return result
@@ -345,24 +346,23 @@ fun russian(n: Int): String {
 
 }
 
-fun numbersToRussianNumerals(n: Int, m: Int, k: Int): String {
+fun russianConvert(n: Int, m: Int, k: Int): String {
     var result = ""
-
     result += when (n) {
-        9 -> "девятьсот"
-        8 -> "восемьсот"
-        7 -> "семьсот"
-        6 -> "шестьсот"
-        5 -> "пятьсот"
-        4 -> "четыреста"
-        3 -> "триста"
-        2 -> "двести"
-        1 -> "сто"
+        9 -> "девятьсот "
+        8 -> "восемьсот "
+        7 -> "семьсот "
+        6 -> "шестьсот "
+        5 -> "пятьсот "
+        4 -> "четыреста "
+        3 -> "триста "
+        2 -> "двести "
+        1 -> "сто "
         else -> ""
     }
     result += when (m) {
-        9 -> "девяносто"
-        8 -> "восемьдесят"
+        9 -> "девяносто "
+        8 -> "восемьдесят "
         7 -> "семьдесят "
         6 -> "шестьдесят "
         5 -> "пятьдесят "
@@ -370,32 +370,43 @@ fun numbersToRussianNumerals(n: Int, m: Int, k: Int): String {
         3 -> "тридцать "
         2 -> "двадцать "
         1 -> when (k) {
-            9 -> "девятнадцать"
-            8 -> "восемнадцать"
-            7 -> "семнадцать"
-            6 -> "шестнадцать"
-            5 -> "пятнадцать"
-            4 -> "четырнадцать"
-            3 -> "тринадцать"
-            2 -> "двенадцать"
-            1 -> "одиннадцать"
-            else -> "десять"
+            9 -> "девятнадцать "
+            8 -> "восемнадцать "
+            7 -> "семнадцать "
+            6 -> "шестнадцать "
+            5 -> "пятнадцать "
+            4 -> "четырнадцать "
+            3 -> "тринадцать "
+            2 -> "двенадцать "
+            1 -> "одиннадцать "
+            else -> "десять "
         }
         else -> ""
     }
     if (m != 1) {
         result += when (k) {
-            9 -> "девять"
-            8 -> "восемь"
-            7 -> "семь"
-            6 -> "шесть"
-            5 -> "пять"
-            4 -> "четыре"
-            3 -> "три"
-            2 -> "две"
-            1 -> "одна"
+            9 -> "девять "
+            8 -> "восемь "
+            7 -> "семь "
+            6 -> "шесть "
+            5 -> "пять "
+            4 -> "четыре "
+            3 -> "три "
+            2 -> "две "
+            1 -> "одна "
             else -> ""
         }
     }
     return result
+}
+fun numbersToRussianNumerals (n: Int, m: Int, k: Int): String {
+    val russianHundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот",
+            "восемьсот", "девятьсот")
+    val russianDozens = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+            "восемьдесят", "девяносто")
+    val russianDec = listOf("десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать"
+            , "восемнадцать", "девятнадцать")
+    val russianUnits = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять", "десять", "одна", "две" )
+    val hundreds = russianHundreds[n]
+    
 }
