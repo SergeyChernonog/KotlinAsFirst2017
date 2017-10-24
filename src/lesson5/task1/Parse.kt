@@ -75,18 +75,17 @@ fun dateStrToDigit(str: String): String = TODO()
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-
+    var result =""
     val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
             "сентября", "октября", "ноября", "декабря")
-    try {
-        val parts = digital.split(".")
-        if ((parts.size > 3) || (parts[0].toInt() !in 1..31) || (parts[1].toInt() !in 1..12) || (parts[2].toInt() < 0))
-            return ""
-        val month = months[parts[1].toInt() - 1]
-        return String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
-    } catch (e: NumberFormatException) {
+    if (digital.matches(Regex("""(\d\d).(\d\d).(\d\d\d\d) """)))
+        result += digital[0]
+        val numb = digital[1].toInt()-1
         return ""
-    }
+
+
+
+
 }
 
 
@@ -131,10 +130,10 @@ fun bestLongJump(jumps: String): Int {
             if (part in " -%") continue
             if (part.toInt() > max) max = part.toInt()
         }
-        return max
     } catch (e: NumberFormatException) {
         return -1
     }
+    return max
 }
 
 
@@ -148,7 +147,21 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val highs = jumps.split(" ")
+    var max = -1
+    try {
+        for (i in 1 until highs.size step 2) {
+            for (symbol in highs[i])
+                if (symbol !in "+%-") throw NumberFormatException("")
+            if ('+' in highs[i])
+                max = highs[i - 1].toInt()
+        }
+    } catch (e: NumberFormatException) {
+        return -1
+    }
+    return max
+}
 
 /**
  * Сложная
@@ -159,7 +172,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): String = TODO()
 
 /**
  * Сложная
@@ -195,7 +208,27 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val goods = description.split("; ")
+    var max = -1.0
+    var result = ""
+
+    for (good in goods) {
+        val product = good.split(" ")
+        if (product.size != 2) return ""
+        try {
+            if (product[1].toDouble() > max) {
+                max = product[1].toDouble()
+                result = product[0]
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            return ""
+        }
+    }
+
+
+    return result
+}
 
 /**
  * Сложная
