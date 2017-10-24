@@ -196,7 +196,7 @@ fun factorize(n: Int): List<Int> {
     val divided = mutableListOf<Int>()
     while (number > 1) {
         if (number % divisor == 0) {
-            divided.add(divisor)
+            divided += divisor
             number /= divisor
         } else divisor++
     }
@@ -222,13 +222,13 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val baseNumber = mutableListOf<Int>()
     var number = n
-    if (number == 0) baseNumber.add(0)
+    if (number == 0) return listOf(0)
     while (number > 0) {
-        baseNumber.add(0, number % base)
+        baseNumber += number % base
         number /= base
     }
 
-    return baseNumber
+    return baseNumber.reversed()
 }
 
 /**
@@ -245,11 +245,11 @@ fun convertToString(n: Int, base: Int): String {
     if (number == 0) result += '0'
     while (number > 0) {
         val digit = number % base
-        result = if (digit > 9) ('a'.toInt() + digit - 10).toChar() + result
-        else digit.toString() + result
+        result += if (digit > 9) ('a' + digit - 10)
+        else digit.toString()
         number /= base
     }
-    return result
+    return result.reversed()
 }
 
 
@@ -285,9 +285,10 @@ fun decimalFromString(str: String, base: Int): Int {
     var basePow = 1
 
     for (i in str.length - 1 downTo 0) {
-        partInDecimal = when (str[i]) {
-            in '0'..'9' -> str[i].toInt() - '0'.toInt()
-            else -> str[i].toInt() - 'a'.toInt() + 10
+        val digit = str[i]
+        partInDecimal = when (digit) {
+            in '0'..'9' -> digit - '0'
+            else -> digit - 'a' + 10
         }
         result += partInDecimal * basePow
         basePow *= base
@@ -324,20 +325,19 @@ fun russian(n: Int): String {
     val hundreds = (n / 100) % 10
     val dozens = (n / 10) % 10
     val units = n % 10
-    result += russianConvert(hundredsOfThousands, dozensOfThousands, thousands)
     if (n / 1000 > 0) {
         result += if ((dozensOfThousands != 1) && (thousands < 5) && (thousands > 0))
             when (thousands) {
-                1 -> "тысяча "
-                else -> "тысячи "
+                1 -> "тысяча"
+                else -> "тысячи"
             }
         else "тысяч "
     }
 
-    result += if ((units > 2) || (units == 0) || (dozens == 1)) russianConvert(hundreds, dozens, units)
+    result += if ((units > 2) || (units == 0) || (dozens == 1)) numbersToRussianNumerals(hundreds, dozens, units)
     else {
-        if (units == 2) russianConvert(hundreds, dozens, 0) + "два"
-        else russianConvert(hundreds, dozens, 0) + "один"
+        if (units == 2) numbersToRussianNumerals(hundreds, dozens, 0) + "два"
+        else numbersToRussianNumerals(hundreds, dozens, 0) + "один"
     }
     result = result.trim()
     return result
@@ -345,23 +345,24 @@ fun russian(n: Int): String {
 
 }
 
-fun russianConvert(n: Int, m: Int, k: Int): String {
+fun numbersToRussianNumerals(n: Int, m: Int, k: Int): String {
     var result = ""
+
     result += when (n) {
-        9 -> "девятьсот "
-        8 -> "восемьсот "
-        7 -> "семьсот "
-        6 -> "шестьсот "
-        5 -> "пятьсот "
-        4 -> "четыреста "
-        3 -> "триста "
-        2 -> "двести "
-        1 -> "сто "
+        9 -> "девятьсот"
+        8 -> "восемьсот"
+        7 -> "семьсот"
+        6 -> "шестьсот"
+        5 -> "пятьсот"
+        4 -> "четыреста"
+        3 -> "триста"
+        2 -> "двести"
+        1 -> "сто"
         else -> ""
     }
     result += when (m) {
-        9 -> "девяносто "
-        8 -> "восемьдесят "
+        9 -> "девяносто"
+        8 -> "восемьдесят"
         7 -> "семьдесят "
         6 -> "шестьдесят "
         5 -> "пятьдесят "
@@ -369,30 +370,30 @@ fun russianConvert(n: Int, m: Int, k: Int): String {
         3 -> "тридцать "
         2 -> "двадцать "
         1 -> when (k) {
-            9 -> "девятнадцать "
-            8 -> "восемнадцать "
-            7 -> "семнадцать "
-            6 -> "шестнадцать "
-            5 -> "пятнадцать "
-            4 -> "четырнадцать "
-            3 -> "тринадцать "
-            2 -> "двенадцать "
-            1 -> "одиннадцать "
-            else -> "десять "
+            9 -> "девятнадцать"
+            8 -> "восемнадцать"
+            7 -> "семнадцать"
+            6 -> "шестнадцать"
+            5 -> "пятнадцать"
+            4 -> "четырнадцать"
+            3 -> "тринадцать"
+            2 -> "двенадцать"
+            1 -> "одиннадцать"
+            else -> "десять"
         }
         else -> ""
     }
     if (m != 1) {
         result += when (k) {
-            9 -> "девять "
-            8 -> "восемь "
-            7 -> "семь "
-            6 -> "шесть "
-            5 -> "пять "
-            4 -> "четыре "
-            3 -> "три "
-            2 -> "две "
-            1 -> "одна "
+            9 -> "девять"
+            8 -> "восемь"
+            7 -> "семь"
+            6 -> "шесть"
+            5 -> "пять"
+            4 -> "четыре"
+            3 -> "три"
+            2 -> "две"
+            1 -> "одна"
             else -> ""
         }
     }
