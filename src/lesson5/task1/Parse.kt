@@ -216,7 +216,7 @@ fun mostExpensive(description: String): String {
         val price = product[1].toDouble()
         if (price > max) {
             max = price
-            result =  product[0]
+            result = product[0]
         }
     }
     return result
@@ -271,5 +271,9 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    val conveyor = Array(cells  )
+    for (i in 1..cells)
+
+}
 
