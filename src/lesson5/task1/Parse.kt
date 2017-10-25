@@ -75,16 +75,15 @@ fun dateStrToDigit(str: String): String = TODO()
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    var result =""
     val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
             "сентября", "октября", "ноября", "декабря")
-    if (digital.matches(Regex("""(\d\d).(\d\d).(\d\d\d\d) """)))
-        result += digital[0]
-        val numb = digital[1].toInt()-1
+    try {
+        val date = digital.split(".").map { it.toInt() }
+        return if ((date[0] !in 1..31) or (date[1] !in 1..12) or (date[2] < 0) or (date.size != 3)) ""
+        else String.format("%d %s %d", date[0], months[date[1] - 1], date[2])
+    } catch (e: NumberFormatException) {
         return ""
-
-
-
+    }
 
 }
 
@@ -104,10 +103,8 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     var result = ""
     for (symbol in phone) {
-        when (symbol) {
-            in "1234567890+-() " -> if (symbol in "1234567890+") result += symbol
-            else -> return ""
-        }
+        if (symbol !in "1234567890+-() ") return ""
+        else if (symbol in "1234567890+") result += symbol
     }
     return result
 }
@@ -214,19 +211,14 @@ fun mostExpensive(description: String): String {
     var result = ""
 
     for (good in goods) {
+        if (!good.matches(Regex("""[а-яёА-ЯЁ]+\s\d+\.\d"""))) return ""
         val product = good.split(" ")
-        if (product.size != 2) return ""
-        try {
-            if (product[1].toDouble() > max) {
-                max = product[1].toDouble()
-                result = product[0]
-            }
-        } catch (e: IndexOutOfBoundsException) {
-            return ""
+        val price = product[1].toDouble()
+        if (price > max) {
+            max = price
+            result = product[0]
         }
     }
-
-
     return result
 }
 
@@ -280,3 +272,4 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+

@@ -408,5 +408,5 @@ fun numbersToRussianNumerals (n: Int, m: Int, k: Int): String {
             , "восемнадцать", "девятнадцать")
     val russianUnits = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять", "десять", "одна", "две" )
     val hundreds = russianHundreds[n]
-    
+    return ""
 }
