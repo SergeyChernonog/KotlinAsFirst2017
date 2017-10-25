@@ -216,7 +216,7 @@ fun mostExpensive(description: String): String {
         val price = product[1].toDouble()
         if (price > max) {
             max = price
-            result = product[0]
+            result =  product[0]
         }
     }
     return result
