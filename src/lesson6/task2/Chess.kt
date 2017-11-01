@@ -23,7 +23,9 @@ data class Square(val column: Int, val row: Int) {
      */
     fun notation(): String {
         return if (!inside()) ""
-        else ""
+        else {
+            return (8 - column + 'a'.toInt() ).toChar() + row.toString()
+        }
     }
 }
 
