@@ -290,7 +290,6 @@ fun decimalFromString(str: String, base: Int): Int {
             in '0'..'9' -> digit - '0'
             else -> digit - 'a' + 10
         }
-        
         result += partInDecimal * basePow
         basePow *= base
     }

@@ -22,12 +22,7 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String {
-        return if (!inside()) ""
-        else {
-            return (column + 'a'.toInt() - 1).toChar() + row.toString()
-        }
-    }
+    fun notation(): String = TODO()
 }
 
 /**
@@ -37,16 +32,7 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square {
-    val column: Int
-    val raw: Int
-    if ((notation[0] !in "abcdefg") or (notation[1] !in "12345678")) throw IllegalArgumentException()
-    else {
-        column = notation[0] - 'a' + 1
-        raw = notation[1] - '0'
-    }
-    return Square(column, raw)
-}
+fun square(notation: String): Square = TODO()
 
 /**
  * Простая

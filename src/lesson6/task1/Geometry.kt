@@ -74,17 +74,14 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double {
-        return if (center.distance(other = center) < radius + other.radius) 0.0
-        else center.distance(other = center) - (radius + other.radius)
-    }
+    fun distance(other: Circle): Double =TODO()
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = p.distance(other = center) <= radius
+    fun contains(p: Point): Boolean = TODO()
 
 }
 
@@ -105,20 +102,7 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment {
-    if (points.size < 2) throw IllegalArgumentException()
-    var maxSegment = Segment(points[0], points[1])
-    var maxLength = 0.0
-    for (i in 1 until points.size) {
-        for (j in i + 1 until points.size)
-            if (points[i].distance(points[j]) > maxLength) {
-                maxLength = points[i].distance(points[j])
-                maxSegment = Segment(points[i], points[j])
-            }
-
-    }
-    return maxSegment
-}
+fun diameter(vararg points: Point): Segment =TODO()
 
 /**
  * Простая
@@ -126,13 +110,7 @@ fun diameter(vararg points: Point): Segment {
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle {
-    val radius = diameter.begin.distance(diameter.end) / 2
-    val centerX = (diameter.begin.x + diameter.end.x) / 2
-    val centerY = (diameter.begin.y + diameter.end.y) / 2
-    return Circle(center = Point(centerX, centerY), radius = radius)
-
-}
+fun circleByDiameter(diameter: Segment): Circle =TODO()
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
