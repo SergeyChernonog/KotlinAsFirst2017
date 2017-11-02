@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson6.task2
 
 /**
@@ -24,7 +25,7 @@ data class Square(val column: Int, val row: Int) {
     fun notation(): String {
         return if (!inside()) ""
         else {
-            return (8 - column + 'a'.toInt() ).toChar() + row.toString()
+            return (column + 'a'.toInt() - 1).toChar() + row.toString()
         }
     }
 }
@@ -36,7 +37,16 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    val column: Int
+    val raw: Int
+    if ((notation[0] !in "abcdefg") or (notation[1] !in "12345678")) throw IllegalArgumentException()
+    else {
+        column = notation[0] - 'a' + 1
+        raw = notation[1] - '0'
+    }
+    return Square(column, raw)
+}
 
 /**
  * Простая
@@ -62,6 +72,7 @@ fun square(notation: String): Square = TODO()
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+
 
 /**
  * Средняя
