@@ -79,8 +79,8 @@ fun dateDigitToStr(digital: String): String {
             "сентября", "октября", "ноября", "декабря")
     try {
         val date = digital.split(".").map { it.toInt() }
-        return if ((date[0] !in 1..31) or (date[1] !in 1..12) or (date[2] < 0) or (date.size != 3)) ""
-        else String.format("%d %s %d", date[0], months[date[1] - 1], date[2])
+        if ((date[0] !in 1..31) or (date[1] !in 1..12) or (date[2] < 0) or (date.size != 3)) throw NumberFormatException()
+        else return String.format("%d %s %d", date[0], months[date[1] - 1], date[2])
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -271,9 +271,4 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-    val conveyor = Array(cells  )
-    for (i in 1..cells)
-
-}
-
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
