@@ -340,7 +340,7 @@ fun whichDigit(n: Int, k: Int): Int {
     return (number) % 10
 }
 
-fun convertToRussianNumerals(n: Int, m: Int, k: Int): List<String> {
+fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<String> {
     val russianUnits = listOf<String>("", "один", "два", "три", "четыре", "пять", "шесть", "семь",
             "восемь", "девять", "", "одна", "две", "три", "четыре", "пять", "шесть", "семь",
             "восемь", "девять")
@@ -350,9 +350,8 @@ fun convertToRussianNumerals(n: Int, m: Int, k: Int): List<String> {
             "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
     val russianDozens = listOf<String>("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
             "восемьдесят", "девяносто")
-
-    return if (m == 1) listOf(russianHundreds[n], russianDec[k % 10])
-    else listOf(russianHundreds[n], russianDozens[m], russianUnits[k])
+    return if (dozens == 1) listOf(russianHundreds[hundreds], russianDec[dozens % 10])
+    else listOf(russianHundreds[hundreds], russianDozens[dozens], russianUnits[units])
 }
 
 fun thousandInRussian(m: Int, k: Int): String =
