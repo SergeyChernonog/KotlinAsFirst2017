@@ -334,7 +334,7 @@ fun whichDigit(n: Int): List<Int> {
         result += number % 10
         number /= 10
     }
-    return result
+    return result.reversed()
 }
 
 fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<String> {
