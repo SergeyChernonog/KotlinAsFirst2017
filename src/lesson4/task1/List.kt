@@ -320,24 +320,28 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val (hundredsOfThous, dozensOfThous, thous, hundreds, dozens, units) =  whichDigit(n)
+    val hundredsOfThous = whichDigit(n, 6)
+    val dozensOfThous = whichDigit(n, 5)
+    val thous = whichDigit(n, 4)
+    val hundreds = whichDigit(n, 3)
+    val dozens = whichDigit(n, 2)
+    val units = whichDigit(n, 1)
     var result = listOf("")
-    result += convertToRussianNumerals(hundredsOfThous, dozensOfThous, thous + 10) + thousandInRussian(dozensOfThous, thous)
-    result += convertToRussianNumerals(hundreds, dozens, units)
+    if (n > 1000)
+        result += convertToRussianNumerals(hundredsOfThous, dozensOfThous, thous + 10) + thousandInRussian(dozensOfThous, thous)
+    if (n % 1000 > 0) result += convertToRussianNumerals(hundreds, dozens, units)
     return result.filter { it != "" }.joinToString(" ")
 }
 
-fun whichDigit(n: Int): List<Int> {
-    val result = mutableListOf<Int>()
+fun whichDigit(n: Int, k: Int): Int {
     var number = n
-    for (i in 1..6) {
-        result += number % 10
+    for (i in 2..k) {
         number /= 10
     }
-    return result.reversed()
+    return (number) % 10
 }
 
-fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<String> {
+fun convertToRussianNumerals(n: Int, m: Int, k: Int): List<String> {
     val russianUnits = listOf<String>("", "один", "два", "три", "четыре", "пять", "шесть", "семь",
             "восемь", "девять", "", "одна", "две", "три", "четыре", "пять", "шесть", "семь",
             "восемь", "девять")
@@ -348,8 +352,8 @@ fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<Strin
     val russianDozens = listOf<String>("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
             "восемьдесят", "девяносто")
 
-    return if (dozens == 1) listOf(russianHundreds[hundreds], russianDec[dozens % 10])
-    else listOf(russianHundreds[hundreds], russianDozens[dozens], russianUnits[units])
+    return if (m == 1) listOf(russianHundreds[n], russianDec[k % 10])
+    else listOf(russianHundreds[n], russianDozens[m], russianUnits[k])
 }
 
 fun thousandInRussian(m: Int, k: Int): String =
