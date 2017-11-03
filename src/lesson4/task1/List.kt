@@ -152,7 +152,7 @@ fun times(a: List<Double>, b: List<Double>): Double {
 /**
  * Средняя
  *
- * Рассчитать значение многочлена при заданном x: 
+ * Рассчитать значение многочлена при заданном x:
  * p(x) = p0 + p1*x + p2*x^2 + p3*x^3 + ... + pN*x^N.
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
@@ -327,9 +327,8 @@ fun russian(n: Int): String {
     val dozens = whichDigit(n, 2)
     val units = whichDigit(n, 1)
     var result = listOf("")
-    if (n > 1000)
-        result += convertToRussianNumerals(hundredsOfThous, dozensOfThous, thous + 10) + thousandInRussian(dozensOfThous, thous)
-    if (n % 1000 > 0) result += convertToRussianNumerals(hundreds, dozens, units)
+    result += convertToRussianNumerals(hundredsOfThous, dozensOfThous, thous + 10) + thousandInRussian(dozensOfThous, thous)
+    result += convertToRussianNumerals(hundreds, dozens, units)
     return result.filter { it != "" }.joinToString(" ")
 }
 
