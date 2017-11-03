@@ -320,7 +320,7 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val (hundredsOfThous, dozensOfThous, thous, hundreds, dozens, units) = whichDigit(n)
+    val (hundredsOfThous, dozensOfThous, thous, hundreds, dozens, units) =  whichDigit(n)
     var result = listOf("")
     result += convertToRussianNumerals(hundredsOfThous, dozensOfThous, thous + 10) + thousandInRussian(dozensOfThous, thous)
     result += convertToRussianNumerals(hundreds, dozens, units)
