@@ -65,6 +65,10 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
+
+public val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+        "сентября", "октября", "ноября", "декабря")
+
 fun dateStrToDigit(str: String): String = TODO()
 
 /**
@@ -75,18 +79,20 @@ fun dateStrToDigit(str: String): String = TODO()
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
-            "сентября", "октября", "ноября", "декабря")
     try {
-        val date = digital.split(".").map { it.toInt() }
-        return if ((date[0] !in 1..31) or (date[1] !in 1..12) or (date[2] < 0) or (date.size != 3)) ""
-        else String.format("%d %s %d", date[0], months[date[1] - 1], date[2])
+        val date = digital.split(".").map { it.toInt() } // toInt() бросает исключение NumberFormatException()
+        if (date.size != 3) {
+            throw NumberFormatException()
+        }
+        val (day, month, year) = date
+        if ((day !in 1..31) or (month !in 1..12) or (year < 0) or (date.size != 3)) {
+            throw NumberFormatException()
+        }
+        return String.format("%d %s %d", day, months[month - 1], year)
     } catch (e: NumberFormatException) {
         return ""
     }
-
 }
-
 
 /**
  * Средняя
@@ -103,10 +109,15 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     var result = ""
     for (symbol in phone) {
-        if (symbol !in "1234567890+-() ") return ""
-        else if (symbol in "1234567890+") result += symbol
+        val needed = (symbol in '0'..'9') || (symbol == '+')
+        val legal = symbol in " -()"
+        when {
+            !needed && !legal -> return ""
+            needed -> result += symbol
+        }
     }
     return result
+
 }
 
 /**
@@ -145,14 +156,16 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val highs = jumps.split(" ")
+    val results = jumps.split(" ")
     var max = -1
     try {
-        for (i in 1 until highs.size step 2) {
-            for (symbol in highs[i])
+        for (i in 1 until results.size step 2) {
+            val attempt = results[i]
+            val high = results[i - 1]
+            for (symbol in attempt)
                 if (symbol !in "+%-") throw NumberFormatException("")
-            if ('+' in highs[i])
-                max = highs[i - 1].toInt()
+            if (('+' in attempt) && (high.toInt() > max))
+                max = high.toInt()
         }
     } catch (e: NumberFormatException) {
         return -1
@@ -206,17 +219,22 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть положительными
  */
 fun mostExpensive(description: String): String {
-    val goods = description.split("; ")
+    val parts = description.split("; ")
     var max = -1.0
     var result = ""
-
-    for (good in goods) {
-        if (!good.matches(Regex("""[а-яёА-ЯЁ]+\s\d+\.\d"""))) return ""
-        val product = good.split(" ")
-        val price = product[1].toDouble()
-        if (price > max) {
-            max = price
-            result = product[0]
+    for (part in parts) {
+        try {
+            val (product, price) = part.split(" ")
+            try {
+                if (price.toDouble() > max) {
+                    max = price.toDouble()
+                    result = product
+                }
+            } catch (e: NumberFormatException) {
+                return ""
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            return ""
         }
     }
     return result
@@ -271,9 +289,5 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-
-  return listOf()
-
-}
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
 

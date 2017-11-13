@@ -163,6 +163,7 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  */
 fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
 
+
 /**
  * Средняя
  *
@@ -184,7 +185,6 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int = TODO()
-
 /**
  * Сложная
  *
