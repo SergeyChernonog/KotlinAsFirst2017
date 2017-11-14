@@ -198,9 +198,9 @@ fun lineByPoints(a: Point, b: Point): Line {
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     val tan = (a.y - b.y) / (a.x - b.x)
-    var angle = Math.atan(tan) + Math.PI / 2
+    var ang = Math.atan(tan) + Math.PI / 2
     val point = middlePoint(a, b)
-    return Line(point, angle)
+    return Line(point, ang)
 }
 
 /**
