@@ -66,7 +66,7 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 
-public val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
         "сентября", "октября", "ноября", "декабря")
 
 fun dateStrToDigit(str: String): String = TODO()
@@ -80,7 +80,7 @@ fun dateStrToDigit(str: String): String = TODO()
  */
 fun dateDigitToStr(digital: String): String {
     try {
-        val date = digital.split(".").map { it.toInt() } // toInt() бросает исключение NumberFormatException()
+        val date = digital.split(".").map { it.toInt() } // toInt() может бросить исключение NumberFormatException()
         if (date.size != 3) {
             throw NumberFormatException()
         }
@@ -194,15 +194,15 @@ fun plusMinus(expression: String): String = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    val parts = str.toLowerCase().split(" ")
+    val parts = str.splitToSequence(" ")
     var count = 0
-
-    for (i in 0 until parts.size - 1) {
-        if (parts[i] == parts[i + 1]) {
-            for (j in i downTo 0)
-                count += parts[j].length + 1
-            return count - parts[i].length - 1
-        }
+    var duplicate = ""
+    for (part in parts) {
+        val lowerPart = part.toLowerCase()
+        if (lowerPart != duplicate) {
+            duplicate = lowerPart
+            count += part.length + 1
+        } else return count - part.length - 1
     }
     return -1
 }

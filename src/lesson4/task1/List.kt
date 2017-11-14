@@ -321,12 +321,7 @@ fun roman(n: Int): String = TODO()
  */
 
 fun russian(n: Int): String {
-    val hundredsOfThous = whichDigit(n, 6)
-    val dozensOfThous = whichDigit(n, 5)
-    val thous = whichDigit(n, 4)
-    val hundreds = whichDigit(n, 3)
-    val dozens = whichDigit(n, 2)
-    val units = whichDigit(n, 1)
+    val (hundredsOfThous, dozensOfThous, thous, hundreds, dozens, units) = listOfDigits(n)
     var result = listOf("")
     result += convertToRussianNumerals(hundredsOfThous, dozensOfThous, thous + 10)
     result += thousandInRussian(hundredsOfThous, dozensOfThous, thous)
@@ -334,12 +329,17 @@ fun russian(n: Int): String {
     return result.filter { it != "" }.joinToString(" ")
 }
 
-fun whichDigit(n: Int, k: Int): Int {
+private operator fun <E> List<E>.component6(): E = this[5]
+
+
+fun listOfDigits(n: Int): List<Int> {
+    var result = listOf<Int>()
     var number = n
-    for (i in 2..k) {
+    for (i in 1..6) {
+        result += number % 10
         number /= 10
     }
-    return (number) % 10
+    return result.reversed()
 }
 
 fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<String> {
@@ -359,7 +359,7 @@ fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<Strin
 fun thousandInRussian(hundreds: Int, dozens: Int, units: Int): String =
         when {
             hundreds == 0 && dozens == 0 && units == 0 -> ""
-            dozens== 1 || units !in 1..4 -> "тысяч"
+            dozens == 1 || units !in 1..4 -> "тысяч"
             units == 1 -> "тысяча"
             else -> "тысячи"
         }

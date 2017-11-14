@@ -161,7 +161,16 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - current.row) == Math.abs(end.column - end.row)
+
+fun bishopTrajectory(start: Square, end: Square): List<Square> {
+    var current = start
+    while (!onTheSameLine(current, end)) {
+        current = Square(current.column - 1, current.row - 1)
+    }
+    current = Square(start.column + start.column - current.column, start.row + start.row - current.row)
+    return listOf(start, current, end)
+}
 
 
 /**
@@ -185,6 +194,7 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+
 /**
  * Сложная
  *
