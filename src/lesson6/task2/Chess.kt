@@ -137,11 +137,15 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
     when {
         (!start.inside()) || !end.inside() -> throw IllegalArgumentException()
         start == end -> return 0
-        ((start.column - end.column) % 2 != 0) || ((start.row - end.row) % 2 != 0) -> return -1
-        Math.abs(start.column - start.row) == Math.abs(end.column - end.row) -> return 1
+        unreachable(start, end) -> return -1
+        onTheSameLine(start, end) -> return 1
         else -> return 2
     }
 }
+
+fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - current.row) == Math.abs(end.column - end.row)
+
+fun unreachable(start: Square, end: Square) = ((start.column - end.column) % 2 != 0) || ((start.row - end.row) % 2 != 0)
 
 /**
  * Сложная
@@ -161,15 +165,17 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - current.row) == Math.abs(end.column - end.row)
+
 
 fun bishopTrajectory(start: Square, end: Square): List<Square> {
-    var current = start
-    while (!onTheSameLine(current, end)) {
-        current = Square(current.column - 1, current.row - 1)
-    }
-    current = Square(start.column + start.column - current.column, start.row + start.row - current.row)
-    return listOf(start, current, end)
+    val result = listOf<Square>()
+    if (end == start) return listOf(start)
+    if (unreachable(start, end)) return listOf()
+    var next1 = start
+    var next2 = start
+    var next3 = start
+    var next4 = start
+    return emptyList()
 }
 
 

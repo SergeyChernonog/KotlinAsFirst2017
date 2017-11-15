@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
+import lesson4.task1.center
 
 
 /**
@@ -198,7 +199,9 @@ fun lineByPoints(a: Point, b: Point): Line {
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     val tan = (a.y - b.y) / (a.x - b.x)
-    var ang = Math.atan(tan) + Math.PI / 2
+    var ang = Math.PI / 2 - Math.atan(tan)
+    if (ang >= Math.PI) ang -= Math.PI
+    if (ang < 0.0) ang += Math.PI
     val point = middlePoint(a, b)
     return Line(point, ang)
 }
@@ -220,8 +223,13 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
-
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
+    val perpendicular1 = bisectorByPoints(a,b)
+    val perpendicular2 = bisectorByPoints(b,c)
+    val center = perpendicular1.crossPoint(perpendicular2)
+    val radius = center.distance(a)
+    return Circle(center, radius)
+}
 /**
  * Очень сложная
  *
