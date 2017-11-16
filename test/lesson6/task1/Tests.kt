@@ -11,6 +11,8 @@ class Tests {
         assertEquals(0.0, Point(0.0, 0.0).distance(Point(0.0, 0.0)), 1e-5)
         assertEquals(5.0, Point(3.0, 0.0).distance(Point(0.0, 4.0)), 1e-5)
         assertEquals(50.0, Point(0.0, -30.0).distance(Point(-40.0, 0.0)), 1e-5)
+        assertEquals(0.0, Point(56.0, 2.0).distance(Point(56.0, 2.0)), 1e-5)
+
     }
 
     @Test
@@ -132,11 +134,13 @@ class Tests {
         val p4 = Point(3.0, -1.0)
         val p5 = Point(-3.0, -2.0)
         val p6 = Point(0.0, 5.0)
+
         assertEquals(Segment(p5, p6), diameter(p1, p2, p3, p4, p5, p6))
         assertEquals(Segment(p4, p6), diameter(p1, p2, p3, p4, p6))
         assertEquals(Segment(p3, p4), diameter(p1, p2, p3, p4))
         assertEquals(Segment(p2, p4), diameter(p1, p2, p4))
         assertEquals(Segment(p1, p4), diameter(p1, p4))
+
     }
 
     @Test

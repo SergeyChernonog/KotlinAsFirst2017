@@ -70,6 +70,7 @@ class Tests {
     @Test
     @Tag("Easy")
     fun bishopMoveNumber() {
+        assertEquals(2, bishopMoveNumber(square("g1"), square("h8")))
         assertEquals(-1, bishopMoveNumber(square("a1"), square("g8")))
         assertEquals(-1, bishopMoveNumber(square("c1"), square("f3")))
         assertEquals(0, bishopMoveNumber(square("d4"), square("d4")))
@@ -153,7 +154,7 @@ class Tests {
             val next = this[i + 1]
             assertTrue(
                     Math.abs(next.column - previous.column) == 2 && Math.abs(next.row - previous.row) == 1 ||
-                    Math.abs(next.column - previous.column) == 1 && Math.abs(next.row - previous.row) == 2
+                            Math.abs(next.column - previous.column) == 1 && Math.abs(next.row - previous.row) == 2
             )
         }
     }

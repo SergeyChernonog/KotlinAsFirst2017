@@ -343,14 +343,14 @@ fun listOfDigits(n: Int): List<Int> {
 }
 
 fun convertToRussianNumerals(hundreds: Int, dozens: Int, units: Int): List<String> {
-    val russianUnits = listOf<String>("", "один", "два", "три", "четыре", "пять", "шесть", "семь",
+    val russianUnits = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь",
             "восемь", "девять", "", "одна", "две", "три", "четыре", "пять", "шесть", "семь",
             "восемь", "девять")
-    val russianHundreds = listOf<String>("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+    val russianHundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
             "семьсот", "восемьсот", "девятьсот")
-    val russianDec = listOf<String>("десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
+    val russianDec = listOf("десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
             "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
-    val russianDozens = listOf<String>("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+    val russianDozens = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
             "восемьдесят", "девяносто")
     return if (dozens == 1) listOf(russianHundreds[hundreds], russianDec[units % 10])
     else listOf(russianHundreds[hundreds], russianDozens[dozens], russianUnits[units])

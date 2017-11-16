@@ -26,7 +26,7 @@ data class Square(val column: Int, val row: Int) {
     fun notation(): String {
         return if (!inside()) ""
         else {
-            return ('a' + column - 1) + row.toString()
+            ('a' + column - 1) + row.toString()
         }
     }
 
@@ -41,6 +41,7 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
+    if (notation.length != 2) throw IllegalArgumentException()
     val column = notation[0] - 'a' + 1
     val row = notation[1] - '0'
     if (!Square(column, row).inside()) throw IllegalArgumentException()
@@ -71,6 +72,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
     var count = 0
     if (start.column != end.column) {
         count++
@@ -145,7 +147,7 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
 
 fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - current.row) == Math.abs(end.column - end.row)
 
-fun unreachable(start: Square, end: Square) = ((start.column - end.column) % 2 != 0) || ((start.row - end.row) % 2 != 0)
+fun unreachable(start: Square, end: Square) = (start.column - end.column) % 2 != (start.row - end.row) % 2
 
 /**
  * Сложная
