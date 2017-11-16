@@ -3,7 +3,7 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
-import lesson4.task1.center
+
 
 
 /**
@@ -159,7 +159,16 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point = TODO()
+    fun crossPoint(other: Line): Point {
+        val a1 = b / Math.cos(angle)
+        val a2 = other.b / Math.cos(other.angle)
+        val tan1 = Math.tan(angle)
+        val tan2 = Math.tan(other.angle)
+        val x = (a2 - a1) / (tan1 - tan2)
+        val y = x * tan2 + a2
+        return Point(x, y)
+
+    }
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
@@ -198,8 +207,8 @@ fun lineByPoints(a: Point, b: Point): Line {
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
-    val tan = (a.y - b.y) / (a.x - b.x)
-    var ang = Math.PI / 2 - Math.atan(tan)
+    val line = lineByPoints(a,b)
+    var ang = Math.PI / 2 + line.angle
     if (ang >= Math.PI) ang -= Math.PI
     if (ang < 0.0) ang += Math.PI
     val point = middlePoint(a, b)

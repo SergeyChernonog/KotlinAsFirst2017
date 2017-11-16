@@ -167,16 +167,7 @@ fun unreachable(start: Square, end: Square) = ((start.column - end.column) % 2 !
  */
 
 
-fun bishopTrajectory(start: Square, end: Square): List<Square> {
-    val result = listOf<Square>()
-    if (end == start) return listOf(start)
-    if (unreachable(start, end)) return listOf()
-    var next1 = start
-    var next2 = start
-    var next3 = start
-    var next4 = start
-    return emptyList()
-}
+fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
 
 
 /**
