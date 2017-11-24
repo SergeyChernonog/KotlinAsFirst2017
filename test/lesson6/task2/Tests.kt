@@ -70,7 +70,7 @@ class Tests {
     @Test
     @Tag("Easy")
     fun bishopMoveNumber() {
-        assertEquals(2, bishopMoveNumber(square("g1"), square("h8")))
+        assertEquals(2, bishopMoveNumber(square("h1"), square("g4")))
         assertEquals(-1, bishopMoveNumber(square("a1"), square("g8")))
         assertEquals(-1, bishopMoveNumber(square("c1"), square("f3")))
         assertEquals(0, bishopMoveNumber(square("d4"), square("d4")))

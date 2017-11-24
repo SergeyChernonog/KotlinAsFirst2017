@@ -5,7 +5,6 @@ package lesson6.task1
 import lesson1.task1.sqr
 
 
-
 /**
  * Точка на плоскости
  */
@@ -107,20 +106,7 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment {
-    var result = Segment(Point(0.0, 0.0), Point(0.0, 0.0))
-    var max = 0.0
-    if (points.size <2 ) throw IllegalArgumentException()
-    for (point1 in points) {
-        for (point2 in points) {
-            if ((point1.distance(point2)) > max) {
-                max = point1.distance(point1)
-                result = Segment(point1, point2)
-            } else continue
-        }
-    }
-    return result
-}
+fun diameter(vararg points: Point): Segment = TODO()
 
 /**
  * Простая
@@ -167,7 +153,6 @@ class Line private constructor(val b: Double, val angle: Double) {
         val x = (a2 - a1) / (tan1 - tan2)
         val y = x * tan2 + a2
         return Point(x, y)
-
     }
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
@@ -207,7 +192,7 @@ fun lineByPoints(a: Point, b: Point): Line {
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
-    val line = lineByPoints(a,b)
+    val line = lineByPoints(a, b)
     var ang = Math.PI / 2 + line.angle
     if (ang >= Math.PI) ang -= Math.PI
     if (ang < 0.0) ang += Math.PI
@@ -232,13 +217,8 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
-    val perpendicular1 = bisectorByPoints(a,b)
-    val perpendicular2 = bisectorByPoints(b,c)
-    val center = perpendicular1.crossPoint(perpendicular2)
-    val radius = center.distance(a)
-    return Circle(center, radius)
-}
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
+
 /**
  * Очень сложная
  *

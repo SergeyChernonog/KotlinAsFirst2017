@@ -136,18 +136,18 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
-    when {
-        (!start.inside()) || !end.inside() -> throw IllegalArgumentException()
-        start == end -> return 0
-        unreachable(start, end) -> return -1
-        onTheSameLine(start, end) -> return 1
-        else -> return 2
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    return when {
+        start == end -> 0
+        unreachable(start, end) -> -1
+        onTheSameLine(start, end) -> 1
+        else -> 2
     }
 }
 
 fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - current.row) == Math.abs(end.column - end.row)
 
-fun unreachable(start: Square, end: Square) = (start.column - end.column) % 2 != (start.row - end.row) % 2
+fun unreachable(start: Square, end: Square) = Math.abs(start.column - end.column) % 2 != Math.abs(start.row - end.row) % 2
 
 /**
  * Сложная

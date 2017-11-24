@@ -107,16 +107,16 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    var result = ""
+    val result = StringBuilder("")
     for (symbol in phone) {
         val needed = (symbol in '0'..'9') || (symbol == '+')
         val legal = symbol in " -()"
         when {
             !needed && !legal -> return ""
-            needed -> result += symbol
+            needed -> result.append(symbol)
         }
     }
-    return result
+    return result.toString()
 
 }
 
@@ -202,7 +202,9 @@ fun firstDuplicateIndex(str: String): Int {
         if (lowerPart != duplicate) {
             duplicate = lowerPart
             count += part.length + 1
-        } else return count - part.length - 1
+        } else {
+            return count - part.length - 1
+        }
     }
     return -1
 }
