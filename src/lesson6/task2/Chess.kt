@@ -145,7 +145,7 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
     }
 }
 
-fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - current.row) == Math.abs(end.column - end.row)
+fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - end.column) == Math.abs(current.row - end.row)
 
 fun unreachable(start: Square, end: Square) = Math.abs(start.column - end.column) % 2 != Math.abs(start.row - end.row) % 2
 
