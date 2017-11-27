@@ -23,14 +23,8 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String {
-        return if (!inside()) ""
-        else {
-            ('a' + column - 1) + row.toString()
-        }
-    }
-
-
+    fun notation(): String = if (!inside()) ""
+    else ('a' + column - 1) + row.toString()
 }
 
 /**
@@ -45,7 +39,7 @@ fun square(notation: String): Square {
     val column = notation[0] - 'a' + 1
     val row = notation[1] - '0'
     if (!Square(column, row).inside()) throw IllegalArgumentException()
-    else return Square(column, row)
+    return Square(column, row)
 }
 
 /**
@@ -145,9 +139,11 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
     }
 }
 
-fun onTheSameLine(current: Square, end: Square) = Math.abs(current.column - end.column) == Math.abs(current.row - end.row)
+fun onTheSameLine(current: Square, end: Square) =
+        Math.abs(current.column - end.column) == Math.abs(current.row - end.row)
 
-fun unreachable(start: Square, end: Square) = Math.abs(start.column - end.column) % 2 != Math.abs(start.row - end.row) % 2
+fun unreachable(start: Square, end: Square)
+        = Math.abs(start.column - end.column) % 2 != Math.abs(start.row - end.row) % 2
 
 /**
  * Сложная
