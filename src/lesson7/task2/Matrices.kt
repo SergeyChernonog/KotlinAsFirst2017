@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson7.task2
 
+import lesson7.task1.Cell
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
 
@@ -59,7 +61,35 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 0)
+    var number = 1
+    var i = 0
+    while (number < height * width) {
+        i++
+        for (j in i - 1..width - i) {
+            if (number > height * width) break
+            matrix[i - 1, j] = number
+            number++
+        }
+        for (j in i..height - i) {
+            if (number > height * width) break
+            matrix[j, width - i] = number
+            number++
+        }
+        for (j in width - i - 1 downTo i - 1) {
+            if (number > height * width) break
+            matrix[height - i, j] = number
+            number++
+        }
+        for (j in height - i - 1 downTo i) {
+            if (number > height * width) break
+            matrix[j, i - 1] = number
+            number++
+        }
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -75,7 +105,32 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 0)
+    var i = 0
+    var number = 0
+    while (i < height * width) {
+        number++
+        for (j in number - 1..width - number) {
+            matrix[number - 1, j] = number
+            i++
+        }
+        for (j in number..height - number) {
+            matrix[j, width - number] = number
+            i++
+        }
+        for (j in width - number - 1 downTo number - 1) {
+            matrix[height - number, j] = number
+            i++
+        }
+        for (j in height - number - 1 downTo number) {
+            matrix[j, number - 1] = number
+            i++
+        }
+    }
+    return matrix
+}
+
 
 /**
  * Сложная
@@ -90,7 +145,24 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
  * 10 13 16 18
  * 14 17 19 20
  */
-fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSnake(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 0)
+    var number = 1
+    for (i in 0 until height) {
+        for (j in 0 until width) {
+            if (matrix[i, j] != 0) continue
+            var diagonalHeight = i
+            var diagonalWidth = j
+            while (diagonalWidth >= 0 && diagonalHeight < height) {
+                matrix[diagonalHeight, diagonalWidth] = number++
+                diagonalHeight++
+                diagonalWidth--
+            }
+        }
+    }
+    return matrix
+}
+
 
 /**
  * Средняя
@@ -103,7 +175,16 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height != matrix.width) throw IllegalArgumentException()
+    val rotatedMatrix = createMatrix(matrix.width, matrix.width, matrix[0, 0])
+    for (i in 0 until rotatedMatrix.height) {
+        for (j in 0 until rotatedMatrix.width) {
+            rotatedMatrix[j, rotatedMatrix.width - i - 1] = matrix[i, j]
+        }
+    }
+    return rotatedMatrix
+}
 
 /**
  * Сложная
