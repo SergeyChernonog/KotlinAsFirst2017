@@ -70,8 +70,8 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, val e: E)
 
     override fun equals(other: Any?): Boolean {
         if ((other !is Matrix<*>) || (other.width != width) || (other.height != height)) return false
-        for (i in 1 until height) {
-            for (j in 1 until width)
+        for (i in 0 until height) {
+            for (j in 0 until width)
                 if (container[i][j] != other[i, j]) return false
         }
         return true

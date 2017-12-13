@@ -65,7 +65,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val matrix = createMatrix(height, width, 0)
     var number = 1
     var i = 0
-    while (number < height * width) {
+    while (number <= height * width) {
         i++
         for (j in i - 1..width - i) {
             if (number > height * width) break
