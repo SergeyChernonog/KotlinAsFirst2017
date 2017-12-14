@@ -286,7 +286,15 @@ fun canOpenLock(key: Matrix<Int>, lock: Matrix<Int>): Triple<Boolean, Int, Int> 
  * Инвертировать заданную матрицу.
  * При инвертировании знак каждого элемента матрицы следует заменить на обратный
  */
-operator fun Matrix<Int>.unaryMinus(): Matrix<Int> = TODO(this.toString())
+operator fun Matrix<Int>.unaryMinus(): Matrix<Int> {
+    val result = createMatrix(this.height, this.width, 0)
+    for (i in 0 until this.height) {
+        for (j in 0 until this.width) {
+            result[i, j] = -this[i, j]
+        }
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -296,7 +304,18 @@ operator fun Matrix<Int>.unaryMinus(): Matrix<Int> = TODO(this.toString())
  * В противном случае бросить IllegalArgumentException.
  * Подробно про порядок умножения см. статью Википедии "Умножение матриц".
  */
-operator fun Matrix<Int>.times(other: Matrix<Int>): Matrix<Int> = TODO(this.toString())
+operator fun Matrix<Int>.times(other: Matrix<Int>): Matrix<Int> {
+    if (this.width != other.height) throw IllegalArgumentException()
+    val result = createMatrix(this.height, other.width, 0)
+    for (i in 0 until this.height) {
+        for (j in 0 until other.width) {
+            for (k in 0 until this.width) {
+                result[i, j] += this[i, k] * other[k, j]
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -325,8 +344,9 @@ operator fun Matrix<Int>.times(other: Matrix<Int>): Matrix<Int> = TODO(this.toSt
  * 0  4 13  6
  * 3 10 11  8
  */
-fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> = TODO()
 
+
+fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> = TODO()
 /**
  * Очень сложная
  *
