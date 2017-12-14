@@ -16,7 +16,7 @@ class Tests {
     @Test
     @Tag("Normal")
     fun getSetInt() {
-        val matrix = createMatrix(3, 2, 0)
+        val matrix = createMatrix(3, 4, 0)
         var value = 0
         for (row in 0 until matrix.height) {
             for (column in 0 until matrix.width) {

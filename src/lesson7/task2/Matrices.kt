@@ -346,7 +346,7 @@ operator fun Matrix<Int>.times(other: Matrix<Int>): Matrix<Int> {
  */
 
 
-fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> = TODO()
+fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> =  TODO()
 /**
  * Очень сложная
  *

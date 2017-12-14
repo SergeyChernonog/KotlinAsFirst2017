@@ -54,6 +54,7 @@ class Tests {
     @Test
     @Tag("Hard")
     fun generateRectangles() {
+
         assertEquals(createMatrix(1, 1, listOf(listOf(1))), generateRectangles(1, 1))
         assertEquals(createMatrix(2, 2,
                 listOf(
