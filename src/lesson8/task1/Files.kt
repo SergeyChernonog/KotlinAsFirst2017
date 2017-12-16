@@ -90,13 +90,13 @@ fun sibilants(inputName: String, outputName: String) {
 }
 
 fun corrector(str: String): String {
-    var res = str.replace(Regex("""(?<=[жчшщЖЧШЩ])ы"""), "и")
-    res = res.replace(Regex("""(?<=[жчшщЖЧШЩ])Ы"""), "И")
-    res = res.replace(Regex("""(?<=[жчшщЖЧШЩ])Я"""), "А")
-    res = res.replace(Regex("""(?<=[жчшщЖЧШЩ])я"""), "а")
-    res = res.replace(Regex("""(?<=[жчшщЖЧШЩ])ю"""), "у")
-    res = res.replace(Regex("""(?<=[жчшщЖЧШЩ])Ю"""), "У")
-    return res
+    var result = str.replace(Regex("""(?<=[жчшщЖЧШЩ])ы"""), "и")
+    result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])Ы"""), "И")
+    result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])Я"""), "А")
+    result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])я"""), "а")
+    result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])ю"""), "у")
+    result= result.replace(Regex("""(?<=[жчшщЖЧШЩ])Ю"""), "У")
+    return result
 }
 
 /**
