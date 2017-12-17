@@ -95,7 +95,7 @@ fun corrector(str: String): String {
     result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])Я"""), "А")
     result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])я"""), "а")
     result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])ю"""), "у")
-    result= result.replace(Regex("""(?<=[жчшщЖЧШЩ])Ю"""), "У")
+    result = result.replace(Regex("""(?<=[жчшщЖЧШЩ])Ю"""), "У")
     return result
 }
 
@@ -195,6 +195,7 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     val output = File(outputName).bufferedWriter()
+
     fun case(char: Char, changedCase: Char) {
         if ((char in 'A'..'Z') || (char in 'А'..'Я')) output.write(dictionary[changedCase]?.capitalize())
         else output.write(dictionary[changedCase])
@@ -204,7 +205,7 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
         for (char in line) {
             when {
                 char.toLowerCase() in dictionary.keys -> case(char, char.toLowerCase())
-                char.toUpperCase() in dictionary.keys -> case (char, char.toUpperCase())
+                char.toUpperCase() in dictionary.keys -> case(char, char.toUpperCase())
                 else -> output.write(char.toString())
             }
         }
@@ -285,7 +286,33 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val output = File(outputName).bufferedWriter()
+    output.write("<html>")
+    output.write("<body>")
+    output.write("<p>")
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty()) {
+            output.write("</p>")
+            output.write("<p>")
+        } else {
+            val outputLine = mark(line)
+            output.write(outputLine)
+        }
+    }
+    output.write("</p>")
+    output.write("</body>")
+    output.write("</html>")
+    output.close()
+}
+
+fun mark(line: String): String {
+    var result = line.replace(Regex("""(?<=\S)\*\*"""), "</b>")
+    result = result.replace(Regex("""\*\*"""), "<b>")
+    result = result.replace(Regex("""(?<=\S)\*"""), "</i>")
+    result = result.replace(Regex("""\*"""), "<i>")
+    result = result.replace(Regex("""(?<=\S)~~"""), "</s>")
+    result = result.replace(Regex("""~~"""), "<s>")
+    return result
 }
 
 /**
