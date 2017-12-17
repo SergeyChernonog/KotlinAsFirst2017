@@ -295,8 +295,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             output.write("</p>")
             output.write("<p>")
         } else {
-            val outputLine = mark(line)
-            output.write(outputLine)
+            output.write(mark(line))
         }
     }
     output.write("</p>")
@@ -306,13 +305,48 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
 }
 
 fun mark(line: String): String {
-    var result = line.replace(Regex("""(?<=\S)\*\*"""), "</b>")
-    result = result.replace(Regex("""\*\*"""), "<b>")
-    result = result.replace(Regex("""(?<=\S)\*"""), "</i>")
-    result = result.replace(Regex("""\*"""), "<i>")
-    result = result.replace(Regex("""(?<=\S)~~"""), "</s>")
-    result = result.replace(Regex("""~~"""), "<s>")
-    return result
+    val string = line.replace("**", "<b>").replace("*", "<i>").replace("~~", "<s>")
+    val result = StringBuilder()
+    var iCount = 1 // Проверка, является ли тег первым из пары
+    var bCount = 1
+    var sCount = 1
+    var i = 0
+    while (i < string.length) {
+        if (string[i] == '<') {
+            when {
+                ((string.substring(i, i + 3) == "<b>") && (bCount % 2 != 0)) -> {
+                    result.append("<b>")
+                    bCount ++
+                }
+                ((string.substring(i, i + 3) == "<b>") && (bCount % 2 == 0)) ->  {
+                    result.append("</b>")
+                    bCount ++
+                }
+
+                ((string.substring(i, i + 3) == "<i>") && (iCount % 2 != 0)) ->  {
+                    result.append("<i>")
+                    iCount ++
+                }
+                ((string.substring(i, i + 3) == "<i>") && (iCount % 2 == 0)) ->  {
+                    result.append("</i>")
+                    iCount ++
+                }
+                ((string.substring(i, i + 3) == "<s>") && (sCount % 2 != 0)) ->  {
+                    result.append("<s>")
+                    sCount ++
+                }
+                ((string.substring(i, i + 3) == "<s>") && (sCount % 2 == 0)) ->  {
+                    result.append("</s>")
+                    sCount ++
+                }
+            }
+            i += 3
+        } else {
+            result.append(string[i])
+            i++
+        }
+    }
+    return result.toString()
 }
 
 /**
