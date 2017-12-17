@@ -166,8 +166,6 @@ fun unreachable(start: Square, end: Square)
 
 
 fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
-
-
 /**
  * Средняя
  *

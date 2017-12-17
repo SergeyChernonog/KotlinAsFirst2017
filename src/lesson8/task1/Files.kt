@@ -287,21 +287,22 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     val output = File(outputName).bufferedWriter()
-    output.write("<html>")
-    output.write("<body>")
-    output.write("<p>")
+    val result = StringBuilder()
+    result.append("<html>")
+    result.append("<body>")
+    result.append("<p>")
     for (line in File(inputName).readLines()) {
         if (line.isEmpty()) {
-            output.write("</p>")
-            output.write("<p>")
+            result.append("</p>")
+            result.append("<p>")
         } else {
-            output.write(mark(line))
-            output.newLine()
+            result.append(mark(line))
         }
     }
-    output.write("</p>")
-    output.write("</body>")
-    output.write("</html>")
+    result.append("</p>")
+    result.append("</body>")
+    result.append("</html>")
+    output.write(result.toString())
     output.close()
 }
 
@@ -317,28 +318,28 @@ fun mark(line: String): String {
             when {
                 ((string.substring(i, i + 3) == "<b>") && (bCount % 2 != 0)) -> {
                     result.append("<b>")
-                    bCount ++
+                    bCount++
                 }
-                ((string.substring(i, i + 3) == "<b>") && (bCount % 2 == 0)) ->  {
+                ((string.substring(i, i + 3) == "<b>") && (bCount % 2 == 0)) -> {
                     result.append("</b>")
-                    bCount ++
+                    bCount++
                 }
 
-                ((string.substring(i, i + 3) == "<i>") && (iCount % 2 != 0)) ->  {
+                ((string.substring(i, i + 3) == "<i>") && (iCount % 2 != 0)) -> {
                     result.append("<i>")
-                    iCount ++
+                    iCount++
                 }
-                ((string.substring(i, i + 3) == "<i>") && (iCount % 2 == 0)) ->  {
+                ((string.substring(i, i + 3) == "<i>") && (iCount % 2 == 0)) -> {
                     result.append("</i>")
-                    iCount ++
+                    iCount++
                 }
-                ((string.substring(i, i + 3) == "<s>") && (sCount % 2 != 0)) ->  {
+                ((string.substring(i, i + 3) == "<s>") && (sCount % 2 != 0)) -> {
                     result.append("<s>")
-                    sCount ++
+                    sCount++
                 }
-                ((string.substring(i, i + 3) == "<s>") && (sCount % 2 == 0)) ->  {
+                ((string.substring(i, i + 3) == "<s>") && (sCount % 2 == 0)) -> {
                     result.append("</s>")
-                    sCount ++
+                    sCount++
                 }
             }
             i += 3
