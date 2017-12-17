@@ -296,7 +296,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             result.append("</p>")
             result.append("<p>")
         } else {
-            result.append(mark(line))
+            result.append(newMark(line))
         }
     }
     result.append("</p>")
@@ -306,7 +306,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     output.close()
 }
 
-fun mark(line: String): String {
+fun newMark(line: String): String {
     val string = line.replace("**", "<b>").replace("*", "<i>").replace("~~", "<s>")
     val result = StringBuilder()
     var iCount = 1 // Проверка, является ли тег первым из пары
