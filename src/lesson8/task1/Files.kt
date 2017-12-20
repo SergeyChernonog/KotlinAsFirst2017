@@ -296,7 +296,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             result.append("</p>")
             result.append("<p>")
         } else {
-            result.append(newMark(line))
+            result.append(Mark(line))
         }
     }
     result.append("</p>")
@@ -306,7 +306,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     output.close()
 }
 
-fun newMark(line: String): String = TODO()
+fun Mark(line: String): String = TODO()
 
 /**
  * Сложная
