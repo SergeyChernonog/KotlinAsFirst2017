@@ -195,19 +195,15 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     val output = File(outputName).bufferedWriter()
-
-    fun case(char: Char, changedCase: Char) {
-        if ((char in 'A'..'Z') || (char in 'А'..'Я')) output.write(dictionary[changedCase]?.capitalize())
-        else output.write(dictionary[changedCase])
-    }
-
+    fun translator(char: Char): String = when {
+            char.toLowerCase() in dictionary.keys -> (dictionary[char.toLowerCase()].toString())
+            char.toUpperCase() in dictionary.keys -> (dictionary[char.toUpperCase()].toString())
+            else -> char.toString()
+        }
     for (line in File(inputName).readLines()) {
         for (char in line) {
-            when {
-                char.toLowerCase() in dictionary.keys -> case(char, char.toLowerCase())
-                char.toUpperCase() in dictionary.keys -> case(char, char.toUpperCase())
-                else -> output.write(char.toString())
-            }
+            if (char.isUpperCase()) output.write(translator(char).capitalize())
+            else output.write(translator(char))
         }
         output.newLine()
     }
