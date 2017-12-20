@@ -116,8 +116,8 @@ fun flattenPhoneNumber(phone: String): String {
             needed -> result.append(symbol)
         }
     }
+    if (result.toString() == "+") return ""
     return result.toString()
-
 }
 
 /**
